@@ -1,0 +1,23 @@
+TODO:
+Create device agnostic code, always be mindful of datatype and device type
+use args kwargs along with default args
+each class should have a make dict function to prevent forget
+1. create directory architecture
+    1. Active projects
+        1.model folder
+        2.data folder
+        3.binder / notebook folder
+        4.readme
+    3.bash scripts folder
+        1. os glue logic
+    4.python library/scripts
+        1. visualization lib - use args kwargs methodology
+            1. confusion matrix
+            2. bar charts
+            3. scatter plots
+        2. commonly rewritten code
+        3. data handling
+        4. loading and saving
+            1. modles have the file extension pt or pth
+        5. Check folders
+            - each dataset and model should have a model that describes it
