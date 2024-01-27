@@ -8,6 +8,11 @@ import torch.func
 Two types of models, 
 dict models that take name info, a base class and a layer dict
 and a custom model that is a dict that takes a name and a class
+
+need model that returns this is the independent variable str
+need flex model that can take sequence dicts for skinny experiments
+
+need model loader!
 """
 class Model0_base(nn.Module):
   def __str__(self):

@@ -5,6 +5,7 @@ what does torchinfo do? third party lib
     #  'preds': [], This is problematic with pandas, just use statistics, and save the pred lists seperatesly
 '''
 
+import torch
 import pandas as pd
 import os
 import pickle
@@ -21,15 +22,15 @@ def experiment_dict():
   return {
     'data_frame': None,
     'model': None,
-    'optimizer_dict': None,
-    'error_function': None,
+    'optim': None,
+    'optim_dict': None,
+    'error_f': None,
     'data_type': None,
     'device': None,
-    'data_set': None,
-    'data_loader_seed': None,
-    'data_batch_size': None,
-    'random_batch': False,
-    'experiment_var': None,
+    'data_file': None,
+    'seed': None,
+    'dl_dict': None,  # data loader
+    'independent_var': None,
   }
 
 
@@ -91,3 +92,9 @@ def load_preds(dir, file):
   with open(path, 'rb') as open_file:
     preds = pickle.load(open_file)
   return preds
+
+
+def load_tensor_dict(file):
+  cwd = os.getcwd()
+  path = os.path.join(cwd, f'data/{file}')
+  return torch.load(path)
