@@ -9,6 +9,7 @@ import torch
 import pandas as pd
 import os
 import pickle
+import sklearn.metrics as mt
 
 
 def pred_dict(experiment, trial, preds):
@@ -20,8 +21,8 @@ def pred_dict(experiment, trial, preds):
 
 def experiment_dict():
   return {
-    'data_frame': None,
     'model': None,
+    'model_init_file': None,
     'optim': None,
     'optim_dict': None,
     'error_f': None,
@@ -31,6 +32,7 @@ def experiment_dict():
     'seed': None,
     'dl_dict': None,  # data loader
     'independent_var': None,
+    'vars': None,  # list of vars for sweeps
   }
 
 
@@ -98,3 +100,38 @@ def load_tensor_dict(file):
   cwd = os.getcwd()
   path = os.path.join(cwd, f'data/{file}')
   return torch.load(path)
+
+
+def write_train_info(exp, writer, model, t, p, error, file):
+  if exp['model_type'] == 'classification':
+    t = torch.stack(t, dim=0)
+    p = torch.stack(p, dim=0)
+    target = torch.argmax(t, dim=1).tolist()
+    pred = torch.argmax(p, dim=1).tolist()
+    writer.add_scalar(f'{file}/accuracy', mt.accuracy_score(target, pred, average='weighted'))
+    writer.add_scalar(f'{file}/precision', mt.precision_score(target, pred, average='weighted'))
+    writer.add_scalar(f'{file}/f1', mt.f1_score(target, pred, average='weighted'))
+    writer.add_scalar(f'{file}/recall', mt.recall_score(target, pred, average='weighted'))
+  writer.add_scalar(f'{file}/error', error.item())
+  if file == 'train':
+    weights = []
+    grads = []
+    for param in model.parameters():
+      if param.grad is not None:
+        grads.append(param.grad.item())
+      weights.append(param.data.item())
+    writer.add_histogram(f'{file}/gradients', grads)
+    writer.add_histogram(f'{file}/weights', weights)
+
+
+def write_test_info(exp, writer, t, p, error, file):
+  if exp['model_type'] == 'classification':
+    t = torch.stack(t, dim=0)
+    p = torch.stack(p, dim=0)
+    target = torch.argmax(t, dim=1).tolist()
+    pred = torch.argmax(p, dim=1).tolist()
+    writer.add_scalar(f'{file}/accuracy', mt.accuracy_score(target, pred, average='weighted'))
+    writer.add_scalar(f'{file}/precision', mt.precision_score(target, pred, average='weighted'))
+    writer.add_scalar(f'{file}/f1', mt.f1_score(target, pred, average='weighted'))
+    writer.add_scalar(f'{file}/recall', mt.recall_score(target, pred, average='weighted'))
+  writer.add_scalar(f'{file}/error', error.item())
