@@ -32,7 +32,6 @@ def experiment_dict():
     'seed': None,
     'dl_dict': None,  # data loader
     'independent_var': None,
-    'vars': None,  # list of vars for sweeps
   }
 
 

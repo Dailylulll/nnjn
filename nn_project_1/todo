@@ -1,7 +1,14 @@
 1. Test framework on iris, settle data collection and workflow, ie google colab
+    a. create a skinny framework to make things work, and then a data collection workflow
+    to automate sweeps
 2. create models for mlp, radial basis functions and cnn for iris
     a. use smallest network possible for mlp, and use batch techniques
     b. vary radial layer size for radial basis net
     c. build a matrix for cnn, multiply feature tensor * feature tensor (outer product)
 3. Go for mnist
     a. use all three again, vary a bunch of stuff
+
+
+ General
+ 1. Simplify python file, there is a lot of junk you do not need...
+ 2. change tabs to two spaces, make a commit just for this...
