@@ -7,6 +7,9 @@
     c. build a matrix for cnn, multiply feature tensor * feature tensor (outer product)
 3. Go for mnist
     a. use all three again, vary a bunch of stuff
+4. Sanity check on half moon sets
+5. mnist digits
+6 mnist fasion
 
 
  General

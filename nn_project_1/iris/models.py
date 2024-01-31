@@ -17,12 +17,11 @@ need model loader!
 
 
 def get_model(name):
-  match name:
-    case('model0'):
+  if name == 'model0':
       return Model0
-    case('variable'):
+  elif name == 'variable':
       return Variable
-    case _:
+  else:
       raise ValueError('name')
 
 
@@ -36,16 +35,11 @@ class Model0(nn.Module):
 
   def __init__(self):
     super().__init__()
-    self.lin1 = nn.Linear(1, 10)
-    self.lin2 = nn.Linear(10, 10)
-    self.lin3 = nn.Linear(10, 1)
+    self.lin1 = nn.Linear(4, 3)
 
   def forward(self, x):
     x = self.lin1(x)
-    x = nn.functional.sigmoid(x)
-    x = self.lin2(x)
-    x = nn.functional.sigmoid(x)
-    return self.lin3(x)
+    return torch.nn.functional.softmax(x, dim=1)
 
 
 def save_trained_model(model, experiment, trial):

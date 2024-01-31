@@ -1,0 +1,21 @@
+Function to reduce keyword dict before passing to func
+
+import inspect
+
+def my_function(a, b=0):
+    print(a, b)
+
+kwargs = {
+    'a': 1,
+    'b': 2,
+    'c': 3,  # This argument is not accepted by my_function
+}
+
+# Inspect the function signature
+accepted_params = inspect.signature(my_function).parameters
+
+# Filter the kwargs dictionary
+filtered_kwargs = {k: v for k, v in kwargs.items() if k in accepted_params}
+
+# Call the function with the filtered kwargs
+my_function(**filtered_kwargs)
