@@ -29,6 +29,10 @@ def get_error(name):
       return torch.nn.L1Loss
     case 'bce':
       return torch.nn.BCELoss
+    case 'ce':
+      return torch.nn.CrossEntropyLoss
+    case 'bcel':
+      return torch.nn.BCEWithLogitsLoss
     case _:
       raise ValueError('name')
 

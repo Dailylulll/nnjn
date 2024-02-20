@@ -17,8 +17,8 @@ need model loader!
 
 
 def get_model(name):
-  if name == 'model0':
-      return Model0
+  if name == 'mlp0':
+      return mlp0
   elif name == 'variable':
       return Variable
   else:
@@ -30,8 +30,8 @@ class Variable:
     return 'Model is the hyperparameter'
 
 
-class Model0(nn.Module):
-  name = 'model0'
+class mlp0(nn.Module):
+  name = 'mlp0'
 
   def __init__(self):
     super().__init__()
@@ -67,8 +67,8 @@ def load_trained_model(file):
   return torch.load(path)
 
 
-def load_init_model(file):
+def load_init_model(model):
   cwd = os.getcwd()
   path = os.path.join(cwd, 'start_models')
-  path = os.path.join(path, file)
+  path = os.path.join(path, f'{model}.pth')
   return torch.load(path)
